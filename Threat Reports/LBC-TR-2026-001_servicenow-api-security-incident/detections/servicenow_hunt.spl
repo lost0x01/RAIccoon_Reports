@@ -1,7 +1,0 @@
-index=servicenow (uri_path="/api/now/related_list_edit/create" OR request_uri="/api/now/related_list_edit/create" OR _raw="/api/now/related_list_edit/create")
-| eval source_ip=coalesce(src_ip, client_ip, remote_addr, ip)
-| eval user_context=coalesce(user, user_name, account, principal, "unknown")
-| search earliest="06/02/2026:00:00:00" latest="06/06/2026:23:59:59"
-| stats count as requests min(_time) as first_seen max(_time) as last_seen values(method) as methods values(status) as statuses by host source_ip user_context
-| convert ctime(first_seen) ctime(last_seen)
-| sort - requests

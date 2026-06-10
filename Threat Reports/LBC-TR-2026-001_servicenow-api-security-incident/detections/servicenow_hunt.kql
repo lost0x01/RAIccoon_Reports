@@ -1,9 +1,0 @@
-let suspiciousIPs = dynamic(["51.159.98.241", "86.245.155.105"]);
-let suspiciousPath = "/api/now/related_list_edit/create";
-ServiceNowLogs
-| where TimeGenerated between (datetime(2026-06-02) .. datetime(2026-06-06))
-| where Url has suspiciousPath or RequestUri has suspiciousPath or RawData has suspiciousPath
-| extend SourceIP = coalesce(ClientIP, SrcIpAddr, SourceIp, RemoteIP)
-| extend UserContext = coalesce(User, UserName, Account, tostring(parse_json(AdditionalFields).user))
-| summarize Requests=count(), DistinctIPs=dcount(SourceIP), FirstSeen=min(TimeGenerated), LastSeen=max(TimeGenerated) by Tenant=coalesce(Instance, TenantId, Hostname), SourceIP, UserContext, tostring(HttpMethod), tostring(HttpStatus)
-| order by Requests desc
