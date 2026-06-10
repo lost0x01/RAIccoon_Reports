@@ -1,0 +1,129 @@
+LOST BOYS
+CYBER
+LBC
+
+THREAT INTELLIGENCE • MALWARE ANALYSIS • DETECTION ENGINEERING
+
+ServiceNow Hosted Instance API Security Incident — Threat
+Intelligence Executive Summary
+Executive Summary
+Classificatio
+n
+
+TLP:CLEAR
+
+Published
+
+2026-06-10
+
+Version
+
+1.0
+
+Author
+
+Lost Boys Cyber
+
+Report Type
+
+Severity
+
+Threat Intelligence Executive
+Summary
+High
+
+TLP:CLEAR | Lost Boys Cyber | ServiceNow Hosted Instance API Security Incident — Executive Summary
+Published: 2026-06-10 | TLP:CLEAR | Version: 1.0 | Author: Lost Boys Cyber
+
+AI Generation: This report was generated with AI assistance and is provided for informational purposes only. All findings,
+
+IOCs, detection rules, hunting queries, attribution assessments, and recommendations must be independently reviewed and
+
+validated by a qualified security professional before operational use.
+
+Table of Contents
+• 1. BLUF
+• 2. Expected Impact Statement
+• 3. What Happened
+• 4. Why It Matters
+
+• 5. Confidence and Caveats
+• 6. Immediate Actions for Defenders
+• 7. Bottom-Line Assessment
+
+1. BLUF
+Between 2-3 June 2026, attackers exploited a ServiceNow-hosted API access control failure to query data from a
+subset of customer instances before the vendor pushed a hosted fix on 5 June. Public reporting and multiple
+secondary sources consistently indicate the exposure was tied to an endpoint associated with
+/api/now/related_list_edit/create and a configuration state that allowed unauthenticated access. The most material
+enterprise risk is not only the direct exposure of tickets, employee records, workflow data, and security cases, but
+the secondary exposure of credentials, API tokens, integration secrets, and internal process knowledge commonly
+stored in ServiceNow records.
+
+2. Expected Impact Statement
+Expected impact is HIGH for directly affected tenants and MODERATE for the broader ServiceNow customer
+base. For affected organisations, likely consequences include regulatory notification pressure, third-party risk
+escalation, targeted follow-on intrusion using harvested secrets, and trust degradation around SaaS control
+boundaries. For customers not individually notified by ServiceNow, immediate platform compromise risk appears
+reduced after the 5 June hosted remediation, but log review, secret rotation for sensitive records, and validation of
+legacy/custom API exposure remain warranted.
+
+3. What Happened
+• ServiceNow applied a hosted security update on 5 June 2026 after identifying a security issue that could
+let an unauthenticated user gain greater access to instances than intended.
+• The vendor stated that, for a subset of customers, it observed successful queries of instance tables and
+notified those customers directly by support case.
+• Public reporting indicates the issue primarily impacted Australia-release tenants and some earlier-release
+instances with specific configuration changes.
+• Community and third-party reporting strongly suggest the issue involved /api/now/related_list_edit/create
+and missing authentication on a Scripted REST resource.
+
+4. Why It Matters
+• ServiceNow often stores highly sensitive operational data rather than just ticket metadata.
+• Support cases and attachments can contain credentials, API tokens, architecture notes, and
+troubleshooting artefacts that enable follow-on intrusion.
+
+• Even a limited read-only exposure can materially increase phishing, identity-abuse, and vendorimpersonation risk.
+• Notification timing and hidden-advisory handling create third-party risk and compliance questions for
+affected organisations.
+
+5. Confidence and Caveats
+Category
+
+Assessment
+Hosted remediation date, successful table queries for a subset of customers, vendor
+
+High confidence
+
+notification-by-case model, affected-scope language, and no public CVE assignment as
+of publication.
+
+Medium confidence
+
+Exact endpoint path, requires_authentication=false root-cause theory, Guest log context,
+and IP 51.159.98.241 as a primary hunt lead.
+
+Low-to-medium
+
+Additional IP 86.245.155.105 and the claim that the issue was internally documented on
+
+confidence
+
+7 April 2026.
+
+6. Immediate Actions for Defenders
+• Confirm whether your organisation received a ServiceNow support case tied to the incident.
+• Review ServiceNow transaction and node logs for 2-3 June 2026, with focus on
+/api/now/related_list_edit/create and Guest-context activity.
+• Review tickets, attachments, and knowledge records that may have contained plaintext credentials or
+sensitive implementation detail.
+• Rotate any exposed secrets and monitor for follow-on use across identity, VPN, cloud, and developer
+platforms.
+• Audit custom and legacy Scripted REST Resources for both authentication and ACL enforcement.
+
+7. Bottom-Line Assessment
+This incident should be treated as a confirmed third-party SaaS security event with likely downstream
+exploitation value. Even if the exposed dataset proves limited, ServiceNow commonly holds the exact operational
+detail adversaries need to pivot into broader enterprise compromise.
+
+

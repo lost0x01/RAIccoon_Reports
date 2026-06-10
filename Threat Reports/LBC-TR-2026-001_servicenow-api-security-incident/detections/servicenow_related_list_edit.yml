@@ -1,0 +1,26 @@
+title: ServiceNow Related List Edit Endpoint Queried from Untrusted Source
+id: 9a4694de-3e5f-42d4-a75a-182552620001
+status: experimental
+description: Detects requests to the community-reported ServiceNow endpoint associated with the June 2026 hosted-instance security incident.
+author: Lost Boys Cyber
+logsource:
+  category: webserver
+  product: servicenow
+
+detection:
+  selection_path:
+    cs-uri-stem|contains: '/api/now/related_list_edit/create'
+  selection_ip:
+    c-ip:
+      - '51.159.98.241'
+      - '86.245.155.105'
+  condition: selection_path or (selection_path and selection_ip)
+fields:
+  - c-ip
+  - cs-uri-stem
+  - cs-method
+  - sc-status
+  - cs-username
+falsepositives:
+  - Legitimate internal testing of the same endpoint
+level: high

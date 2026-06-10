@@ -1,0 +1,7 @@
+ioc_type,value,confidence,source,notes
+Source IP,51.159.98.241,Medium,SRC-002 / SRC-003 / SRC-004,Most consistently cited suspicious IP tied to requests against the exposed endpoint.
+Source IP,86.245.155.105,Low,SRC-003,Additional possible source IP mentioned in single-source technical reporting; treat as hunt lead rather than confirmed IOC.
+URI Path,/api/now/related_list_edit/create,Medium,SRC-002 / SRC-003 / SRC-004,Community-reported vulnerable endpoint; vendor has not publicly confirmed the exact path.
+User Context,Guest,Medium,SRC-003 / SRC-004,Unauthenticated requests may appear in transaction logs as Guest due to missing user context.
+Time Window,2026-06-02 through 2026-06-03 UTC,High,SRC-001 / SRC-004,Observed anomalous activity window repeatedly cited across reporting.
+Affected Scope,Australia release and some pre-Australia instances with specific configuration changes,High,SRC-001 / SRC-002 / SRC-004,Vendor-quoted scope language.
